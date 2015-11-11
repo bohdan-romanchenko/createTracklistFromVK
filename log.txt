@@ -1,0 +1,29 @@
+{
+"1":{
+		"artist":"Coldplay","title":"Always in My Head"
+	},
+"2":{
+		"artist":"Coldplay","title":"Magic"
+	},
+"3":{
+		"artist":"Coldplay","title":"Ink"
+	},
+"4":{
+		"artist":"Coldplay","title":"True Love"
+	},
+"5":{
+		"artist":"Coldplay","title":"Midnight"
+	},
+"6":{
+		"artist":"Coldplay","title":"Another\u2019s Arms"
+	},
+"7":{
+		"artist":"Coldplay","title":"Oceans"
+	},
+"8":{
+		"artist":"Coldplay","title":"A Sky Full of Stars"
+	},
+"9":{
+		"artist":"Coldplay","title":"O"
+	}
+}
