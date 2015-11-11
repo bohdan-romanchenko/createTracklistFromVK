@@ -15,6 +15,7 @@ public class SearchMusicVk{
 	public static void main(String[] args) throws URISyntaxException,
 			IOException, ParseException{
 
+//		commented for reading args from command line or from console
 //		String pathJSON = args[0];
 //		String pathTracklist = args[1];
 		Scanner scanner = new Scanner(System.in);
