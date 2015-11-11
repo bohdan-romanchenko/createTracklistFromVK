@@ -10,34 +10,30 @@ import java.util.Scanner;
 
 public class SearchMusicVk{
 
-	public static String[] artists, titles;
+	public static String[] titles;
+	public static String artist;
 
 	public static void main(String[] args) throws URISyntaxException,
 			IOException, ParseException{
 
-//		commented for reading args from command line or from console
-//		String pathJSON = args[0];
-//		String pathTracklist = args[1];
+		//uncomment to read from command line or not to input
+									//in console
+		//		String pathJSON = args[0];
+		//		String pathTracklist = args[1];
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Input path and name of JSONFile : ");
 		String pathJSON = scanner.nextLine();
 		System.out.print("Input name and path where you want to save tracklist : ");
 		String pathTracklist = scanner.nextLine();
 
-		String ACCESS_TOKEN = "123";
+		String ACCESS_TOKEN = "123";    //take access token from application vk
 		String YOUR_ID_VK = "456";
 		parseLogJSON(pathJSON);
 		String urlForVk = "https://api.vk.com/method/audio.search?&" +
-				"oid=" + YOUR_ID_VK +
-				"need_user=0&" +
-				"q=" + artists[0] + "&" +
-				"auto_complete=0&" +
-				"lyrics=0&" +
-				"performer_only=1&" +
-				"sort=2&" +
-				"search_own=0&" +
-				"offset=1&" +
-				"count=300&" +
+				"oid=" + YOUR_ID_VK + "need_user=0&" +
+				"q=" + artist + "&auto_complete=0&" +
+				"lyrics=0&performer_only=1&" +
+				"sort=2&search_own=0&offset=1&count=300&" +
 				"access_token=" + ACCESS_TOKEN;
 		parseAndSaveTracklist(urlForVk, pathTracklist);
 	}
@@ -48,11 +44,11 @@ public class SearchMusicVk{
 			Object obj = parser.parse(new FileReader(pathJSON));
 			JSONObject jsonObject = (JSONObject) obj;
 			JSONObject insideJsonObject;
-			artists = new String[((JSONObject) obj).size()];
+			artist = new String();
 			titles = new String[((JSONObject) obj).size()];
 			for(int i = 0; i < ((JSONObject) obj).size(); i++){
 				insideJsonObject = (JSONObject) jsonObject.get("" + (i + 1) + "");
-				artists[i] = ((String) insideJsonObject.get("artist")).trim();
+				artist = ((String) insideJsonObject.get("artist")).trim();
 				titles[i] = ((String) insideJsonObject.get("title")).trim();
 			}
 		}catch (Exception e){
@@ -64,7 +60,7 @@ public class SearchMusicVk{
 		try{
 			URL url = new URL(urle);
 			java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-			con.setConnectTimeout(3000);
+			con.setConnectTimeout(334);
 			con.connect();
 			int resp = con.getResponseCode();
 			if(resp == 200 || resp == 6){
@@ -98,15 +94,15 @@ public class SearchMusicVk{
 				JSONObject arrayInNumber = (JSONObject) objectInJson.get(i + 1);
 				String titleSong = (String) arrayInNumber.get("title");
 				if(!(arrayInNumber.get("url")).equals("") && checkTitle(titleSong.trim())){
-						writer.println("#EXTINF:" + (arrayInNumber.get("duration")) + "," +
-								((String)arrayInNumber.get("artist")).trim() + " - " +
-								((String)arrayInNumber.get("title")).trim());
-						String URL = (String) arrayInNumber.get("url");
-						URL = URL.replace("https", "http");
-						String[] cache = URL.split("\\?");
-						URL = cache[0];
-						writer.println(URL);
-					}
+					writer.println("#EXTINF:" + (arrayInNumber.get("duration")) + "," +
+							((String)arrayInNumber.get("artist")).trim() + " - " +
+							((String)arrayInNumber.get("title")).trim());
+					String URL = (String) arrayInNumber.get("url");
+					URL = URL.replace("https", "http"); //and remake https to http
+					String[] cache = URL.split("\\?");  //to del everything after ? symbol
+					URL = cache[0];
+					writer.println(URL);
+				}
 			}
 			writer.close();
 		} catch(Exception e) {
@@ -117,7 +113,7 @@ public class SearchMusicVk{
 	private static boolean checkTitle(String t){
 		for(int i = 0; i < titles.length; i++)
 			if(titles[i].equalsIgnoreCase(t)){
-				titles[i] = "!@#$%^";   //unreal name to search again
+				titles[i] = "!@#$%^";   //unreal name to search
 				return true;
 			}
 		return false;
