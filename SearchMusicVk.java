@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class SearchMusicVk{
 
-//	public static String[] titles;
 	public static ArrayList<String> titles = new ArrayList<>();
 	public static String artist;
 
