@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class SearchMusicVk{
 
+//	public static String[] titles;
 	public static ArrayList<String> titles = new ArrayList<>();
 	public static String artist;
 
@@ -26,9 +27,8 @@ public class SearchMusicVk{
 		System.out.print("Input name and path where you want to save tracklist : ");
 		String pathTracklist = scanner.nextLine();
 
-		String ACCESS_TOKEN = "db0e545368269b51704694896f645da88413" +
-				"df41e55a4ef4565cfe0567bfe79dac513683f29d5984715b6";    //take access token from application vk
-		String YOUR_ID_VK = "17967062";
+		String ACCESS_TOKEN = "";    //take access token from application vk
+		String YOUR_ID_VK = "";
 		parseLogJSON(pathJSON);
 		String urlForVk = "https://api.vk.com/method/audio.search?&" +
 				"oid=" + YOUR_ID_VK + "need_user=0&" +
